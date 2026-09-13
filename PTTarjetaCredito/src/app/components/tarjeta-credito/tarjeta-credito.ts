@@ -14,6 +14,9 @@ import { CommonModule } from '@angular/common';
 })
 export class TarjetaCredito implements OnInit {
   listaTarjetas: any[] = [];
+  listaTarjetasInicial: any[] = [];
+  mesSeleccionado: string | null = null;
+
   accion = 'Agregar';
   formTarjeta: FormGroup;
   id: number | undefined;
@@ -30,16 +33,35 @@ export class TarjetaCredito implements OnInit {
   }
 
   ngOnInit(): void {
-    this.obtenerTarjetas();
+    this.obtenerTarjetas ();
+  }
+
+
+  filtrarMes(mes: string) {
+    this.mesSeleccionado = mes;
+
+    this.listaTarjetas = this.listaTarjetasInicial.filter(
+      tarjeta => tarjeta.fechaExpiracion.substring(0,2) === mes
+    );
+  }
+
+  mostrarTodas() {
+    this.mesSeleccionado = null;
+    this.listaTarjetas = this.listaTarjetasInicial;
   }
 
   obtenerTarjetas() {
-    this._tarjetaService.getListTarjetas().subscribe(data => {
+    this._tarjetaService.getListTarjetas().subscribe({
+      next: (data) => {
+      this.listaTarjetasInicial = data;
       this.listaTarjetas = data;
       console.log(data);
-    }, error => {
-      console.log(error);
-    })
+    },
+    error: (e) => {
+      console.error(e);
+      this.toastr.error("No se pudieron cargar las tarjetas");
+    }
+    });
   }
 
   guardarTarjeta() {

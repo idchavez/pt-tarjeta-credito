@@ -61,8 +61,9 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="d-grid gap-2">
-                            <button [disabled]="this.formTarjeta.invalid"  type="submit" class="btn btn-success btn-lg">
+                            <button [disabled]="this.formTarjeta.invalid" type="submit" class="btn btn-success btn-lg">
                                 <i class="fa-solid fa-database"></i>&nbsp; Aceptar</button>
                         </div>
                     </form>
@@ -73,6 +74,26 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="titulo">Listado de Tarjetas</h5>
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button type="button" class="btn btn-outline-primary" [class.active]="mesSeleccionado === '01'"
+                            (click)="filtrarMes('01')">
+                            Enero
+                        </button>
+
+                        <button type="button" class="btn btn-outline-primary" [class.active]="mesSeleccionado === '08'"
+                            (click)="filtrarMes('08')">
+                            Agosto
+                        </button>
+
+                        <button type="button" class="btn btn-outline-primary" [class.active]="mesSeleccionado === '12'"
+                            (click)="filtrarMes('12')">
+                            Diciembre
+                        </button>
+
+                        <button type="button" class="btn btn-outline-secondary" (click)="mostrarTodas()">
+                            Mostrar todas
+                        </button>
+                    </div>
                     <table class="table">
                         <tbody>
                             <tr *ngFor="let tarjeta of listaTarjetas">

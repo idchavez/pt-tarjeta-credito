@@ -48,6 +48,14 @@ namespace PTBTarjeta.Controllers
 		{
 			try
 			{
+
+				if (!EsMesValido(tarjeta.FechaExpiracion))
+				{
+					return BadRequest(new
+					{
+						message = "El mes de la fecha de expiración debe estar entre 01 y 12."
+					});
+				}
 				_context.Add(tarjeta);
 				await _context.SaveChangesAsync();
 				return Ok(tarjeta);
@@ -97,6 +105,23 @@ namespace PTBTarjeta.Controllers
 			{
 				return BadRequest(e.Message);
 			}
+		}
+
+
+		private bool EsMesValido(string fechaExpiracion)
+		{
+			if (string.IsNullOrWhiteSpace(fechaExpiracion))
+				return false;
+
+			var partes = fechaExpiracion.Split('/');
+
+			if (partes.Length != 2)
+				return false;
+
+			if (!int.TryParse(partes[0], out int mes))
+				return false;
+
+			return mes >= 1 && mes <= 12;
 		}
 	}
 }

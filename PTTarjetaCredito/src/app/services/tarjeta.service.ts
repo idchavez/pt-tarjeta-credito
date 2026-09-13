@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { TarjetaCredito } from '../components/tarjeta-credito/tarjeta-credito';
 
 @Injectable({
   providedIn: 'root',
@@ -11,8 +12,8 @@ export class TarjetaService {
 
   constructor(private http: HttpClient){}
 
-  getListTarjetas(): Observable<any> {
-    return this.http.get(this.myAppUrl + this.myApiUrl);
+  getListTarjetas(): Observable<TarjetaCredito[]> {
+    return this.http.get<TarjetaCredito[]>(this.myAppUrl + this.myApiUrl);
   }
 
   deleteTarjeta(id: number): Observable<any> {
@@ -26,4 +27,5 @@ export class TarjetaService {
   updateTarjeta(id:number, tarjeta: any): Observable<any>{
     return this.http.put(this.myAppUrl + this.myApiUrl + id, tarjeta);
   }
+
 }

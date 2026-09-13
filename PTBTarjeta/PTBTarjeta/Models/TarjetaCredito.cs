@@ -14,8 +14,12 @@ namespace PTBTarjeta.Models
 		[Required]
 		public String NumeroTarjeta { get; set; }
 		[Required]
+
+		
 		public String FechaExpiracion { get; set; }
 		[Required]
 		public String cvv { get; set; }
+
+		
 	}
 }
